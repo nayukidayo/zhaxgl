@@ -1,0 +1,24 @@
+page {
+  --td-cell-hover-color: var(--td-brand-color-light);
+}
+
+.m {
+  width: fit-content;
+  margin: 40rpx auto;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.m::after {
+  border: none;
+}
+
+.a {
+  background-color: var(--td-gray-color-1);
+  border-radius: 50%;
+}
+
+.n {
+  --td-cell-note-color: var(--td-font-gray-2);
+}

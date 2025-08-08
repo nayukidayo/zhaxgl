@@ -1,0 +1,3 @@
+.a {
+  --td-tab-bar-active-color: #5c37d9;
+}

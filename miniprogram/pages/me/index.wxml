@@ -1,0 +1,3 @@
+<t-input t-class="w" wx:if="{{key === 'name' || key === 'phone'}}" model:value="{{value}}" />
+<t-textarea t-class="w t" wx:else indicator maxlength="50" disableDefaultPadding="{{true}}" model:value="{{value}}" />
+<t-button t-class="s" block theme="primary" bind:tap="onSave">保存</t-button>

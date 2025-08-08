@@ -1,0 +1,39 @@
+<wxs module="utils">
+  function formatDate(ms) {
+    var date = getDate(ms)
+    var m = date.getMonth() + 1
+    var d = date.getDate()
+    var h = date.getHours()
+    var n = date.getMinutes().toString()
+    if (n.length === 1) {
+      n = '0' + n
+    }
+    return m + '月' + d + '日' + ' ' + h + ':' + n
+  }
+  function approveToText(val) {
+    if (val === 'fulfilled') return '审批通过'
+    if (val === 'rejected') return '审批驳回'
+    return '未审批'
+  }
+  module.exports = {
+    formatDate: formatDate,
+    approveToText: approveToText,
+  }
+</wxs>
+
+<block wx:if="{{record}}">
+  <t-cell title="巡检人员" note="{{record.user.name}}" />
+  <t-cell title="巡检时间" note="{{utils.formatDate(record.createdAt)}}" />
+  <block wx:if="{{record.approve !== 'pending'}}">
+    <t-cell title="审批人员" note="{{record.approver && record.approver.name}}" />
+    <t-cell title="审批时间" note="{{utils.formatDate(record.approvedAt)}}" />
+  </block>
+  <t-cell title="审批状态" note="{{utils.approveToText(record.approve)}}" />
+  <t-cell wx:if="{{record.approve === 'rejected'}}" title="驳回原因" description="{{record.comment}}" />
+  <view class="t">{{record.title}}</view>
+  <view class="c">{{record.content}}</view>
+  <view class="h">
+    <t-image wx:for="{{record.photo}}" wx:key="index" src="{{item}}" mode="widthFix" width="100%" height="auto" shape="round" />
+  </view>
+  <view class="z"></view>
+</block>

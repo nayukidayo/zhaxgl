@@ -1,0 +1,27 @@
+page {
+  background-color: var(--td-bg-color-page);
+}
+
+.t {
+  padding: 20rpx 40rpx;
+  color: var(--td-text-color-primary);
+}
+
+.t::after {
+  content: ' *';
+  color: var(--td-error-color);
+}
+
+.m {
+  padding: 20rpx;
+  background-color: var(--td-bg-color-container);
+}
+
+.s {
+  margin-top: 40rpx;
+  border-radius: 0 !important;
+}
+
+.z {
+  height: 250rpx;
+}

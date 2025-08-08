@@ -1,0 +1,15 @@
+page {
+  background-color: var(--td-bg-color-page);
+}
+
+.w {
+  margin: 40rpx 0;
+}
+
+.t {
+  height: 300rpx;
+}
+
+.s {
+  border-radius: 0 !important;
+}

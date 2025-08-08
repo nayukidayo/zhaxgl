@@ -1,0 +1,8 @@
+<view class="t">巡检标题</view>
+<t-input model:value="{{title}}" placeholder="请输入文字" />
+<view class="t">现场照片</view>
+<t-upload t-class="m" mediaType="{{mediaType}}" gridConfig="{{gridConfig}}" max="{{max}}" sizeLimit="{{sizeLimit}}" config="{{config}}" files="{{files}}" bind:success="onSuccess" bind:remove="onRemove" />
+<view class="t">巡检内容</view>
+<t-textarea t-class="x" indicator maxlength="200" disableDefaultPadding="{{true}}" model:value="{{content}}" placeholder="请输入文字" />
+<t-button t-class="s" block theme="primary" bind:tap="onSubmit">提交</t-button>
+<view class="z"></view>

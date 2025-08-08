@@ -1,0 +1,32 @@
+<wxs module="utils">
+  function formatDate(ms) {
+    var date = getDate(ms)
+    var m = date.getMonth() + 1
+    var d = date.getDate()
+    return m + '月' + d + '日'
+  }
+  module.exports = {
+    formatDate: formatDate,
+  }
+</wxs>
+
+<t-pull-down-refresh t-class="r" lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
+  <view class="w" hover-class="h" wx:for="{{records}}" wx:key="_id" data-index="{{index}}" bind:tap="onRecordTap">
+    <t-image wx:if="{{item.photo[0]}}" src="{{item.photo[0]}}" mode="aspectFill" width="160" height="90" shape="round" />
+    <view wx:else class="m" style="width: 160px; height: 90px;"></view>
+    <view class="g">
+      <view class="t">{{item.title}}</view>
+      <t-tag t-class="p" wx:if="{{item.approve === 'fulfilled'}}" variant="outline" theme="success">审批通过</t-tag>
+      <t-tag t-class="p" wx:elif="{{item.approve === 'rejected'}}" variant="outline" theme="danger">审批驳回</t-tag>
+      <t-tag t-class="p" wx:else variant="outline" theme="warning">未审批</t-tag>
+      <view class="s">{{utils.formatDate(item.createdAt)}}</view>
+    </view>
+  </view>
+  <view class="l" wx:if="{{isLower}}">
+    <t-loading theme="dots" size="80rpx" />
+  </view>
+  <view class="z"></view>
+  <t-empty wx:if="{{!records.length}}" icon="info-circle-filled" description="暂无数据" />
+</t-pull-down-refresh>
+<t-fab style="right: 64rpx; bottom: calc(200rpx + env(safe-area-inset-bottom));" icon="add" bind:click="onAddClick"></t-fab>
+<t-dialog visible="{{showAddDialog}}" title="请完善个人资料" confirm-btn="确定" cancel-btn="取消" bind:confirm="confirmAddDialog" bind:cancel="cancelAddDialog" />
