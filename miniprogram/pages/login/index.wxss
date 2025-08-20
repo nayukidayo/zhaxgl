@@ -1,0 +1,17 @@
+.q {
+  margin-top: 150rpx;
+  display: flex;
+  flex-direction: column;
+  padding: 50rpx;
+}
+
+.w {
+  font-size: var(--td-font-size-xl);
+  font-weight: bold;
+}
+
+.e {
+  font-size: var(--td-font-size-base);
+  color: var(--td-text-color-secondary);
+  margin: 20rpx 0 60rpx;
+}

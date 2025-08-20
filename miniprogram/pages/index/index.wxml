@@ -16,9 +16,9 @@
     <view wx:else class="m" style="width: 160px; height: 90px;"></view>
     <view class="g">
       <view class="t">{{item.title}}</view>
-      <t-tag t-class="p" wx:if="{{item.approve === 'fulfilled'}}" variant="outline" theme="success">审批通过</t-tag>
-      <t-tag t-class="p" wx:elif="{{item.approve === 'rejected'}}" variant="outline" theme="danger">审批驳回</t-tag>
-      <t-tag t-class="p" wx:else variant="outline" theme="warning">未审批</t-tag>
+      <t-tag t-class="p" wx:if="{{item.approve === 'fulfilled'}}" variant="outline" theme="success">审核通过</t-tag>
+      <t-tag t-class="p" wx:elif="{{item.approve === 'rejected'}}" variant="outline" theme="danger">审核退回</t-tag>
+      <t-tag t-class="p" wx:else variant="outline" theme="warning">未审核</t-tag>
       <view class="s">{{utils.formatDate(item.createdAt)}}</view>
     </view>
   </view>
@@ -28,5 +28,5 @@
   <view class="z"></view>
   <t-empty wx:if="{{!records.length}}" icon="info-circle-filled" description="暂无数据" />
 </t-pull-down-refresh>
-<t-fab style="right: 64rpx; bottom: calc(200rpx + env(safe-area-inset-bottom));" icon="add" bind:click="onAddClick"></t-fab>
+<t-fab wx:if="{{showAdd}}" style="right: 64rpx; bottom: calc(200rpx + env(safe-area-inset-bottom));" icon="add" bind:click="onAddClick"></t-fab>
 <t-dialog visible="{{showAddDialog}}" title="请完善个人资料" confirm-btn="确定" cancel-btn="取消" bind:confirm="confirmAddDialog" bind:cancel="cancelAddDialog" />

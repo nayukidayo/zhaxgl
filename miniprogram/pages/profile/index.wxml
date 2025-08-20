@@ -1,8 +1,25 @@
+<wxs module="utils">
+  function orgStreet(str) {
+    if (typeof str !== 'string') return ''
+    return str.replace(',', '\n')
+  }
+  module.exports = {
+    orgStreet: orgStreet,
+  }
+</wxs>
+
 <button class="m" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
   <t-image slot="content" wx:if="{{profile.avatar}}" src="{{profile.avatar}}" width="150" height="150" shape="circle" mode="aspectFill" />
   <view slot="content" wx:else class="a" style="width: 150px; height: 150px;"></view>
 </button>
 <t-cell t-class="n" title="{{title.name}}" note="{{profile.name}}" hover arrow bordered="{{false}}" required bind:click="onCellClick" data-key="name" />
-<t-cell t-class="n" title="{{title.phone}}" note="{{profile.phone}}" hover arrow bordered="{{false}}" required bind:click="onCellClick" data-key="phone" />
-<t-cell title="{{title.org_name}}" description="{{profile.org_name}}" hover arrow bordered="{{false}}" required bind:click="onCellClick" data-key="org_name" />
-<t-cell title="{{title.org_address}}" description="{{profile.org_address}}" hover arrow bordered="{{false}}" bind:click="onCellClick" data-key="org_address" />
+<t-cell t-class="n" title="{{title.phone}}" note="{{profile.phone}}" arrow bordered="{{false}}" required />
+<block wx:if="{{role !== 'admin'}}">
+  <t-cell title="{{title.org_name}}" description="{{profile.org_name}}" hover arrow bordered="{{false}}" required bind:click="onCellClick" data-key="org_name" />
+  <t-cell t-class="n" title="{{title.org_street}}" note="{{profile.org_street}}" hover arrow bordered="{{false}}" required bind:click="onStreetClick" />
+  <t-picker visible="{{streetVisible}}" value="{{street}}" title="选择街道" cancelBtn="取消" confirmBtn="确认" bind:change="onStreetChange">
+    <t-picker-item options="{{streets}}"></t-picker-item>
+  </t-picker>
+</block>
+<t-cell wx:else t-class="n" title="管理街道" note="{{utils.orgStreet(profile.org_street)}}" arrow bordered="{{false}}" required />
+<t-cell t-class="g" title="退出登录" hover bordered="{{false}}" bind:click="onLogout" />

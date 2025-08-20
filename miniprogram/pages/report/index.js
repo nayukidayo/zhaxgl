@@ -1,4 +1,4 @@
-const { getUserId } = require('../../utils/utils')
+const app = getApp()
 
 Page({
   data: {
@@ -48,13 +48,14 @@ Page({
         cloudPath: v.url.split('/').at(-1),
       })
     }))
-    const userId = await getUserId()
+    const { _id, street } = app.global.user
     await wx.cloud.models.report.create({
       data: {
         title,
         content,
         photo: result.map(v => v.fileID),
-        user: { _id: userId },
+        author: { _id },
+        street: street[0]
       },
     })
     wx.hideLoading()

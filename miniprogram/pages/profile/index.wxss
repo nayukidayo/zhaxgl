@@ -22,3 +22,8 @@ page {
 .n {
   --td-cell-note-color: var(--td-font-gray-2);
 }
+
+.g {
+  margin-top: 60rpx;
+  --td-cell-title-color: var(--td-error-color)
+}

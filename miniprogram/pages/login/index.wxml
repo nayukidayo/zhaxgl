@@ -1,0 +1,5 @@
+<view class="q" wx:if="{{show}}">
+  <view class="w">快捷登录</view>
+  <view class="e">微信授权并绑定手机号后即可登录</view>
+  <t-button t-class="a" block theme="primary" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber">微信一键登录</t-button>
+</view>

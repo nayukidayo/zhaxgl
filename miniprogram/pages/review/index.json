@@ -2,6 +2,8 @@
   "navigationBarTitleText": "巡检汇报",
   "usingComponents": {
     "t-cell": "tdesign-miniprogram/cell/cell",
-    "t-image": "tdesign-miniprogram/image/image"
+    "t-image": "tdesign-miniprogram/image/image",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea"
   }
 }

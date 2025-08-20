@@ -27,3 +27,18 @@ page {
 .z {
   height: 250rpx;
 }
+
+.x {
+  display: flex;
+  gap: 40rpx;
+  padding: 40rpx;
+}
+
+.r {
+  margin-top: 100rpx;
+  --td-textarea-background-color: var(--td-gray-color-2)
+}
+
+.rt {
+  height: 150rpx;
+}

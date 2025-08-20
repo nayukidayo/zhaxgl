@@ -11,9 +11,9 @@
     return m + '月' + d + '日' + ' ' + h + ':' + n
   }
   function approveToText(val) {
-    if (val === 'fulfilled') return '审批通过'
-    if (val === 'rejected') return '审批驳回'
-    return '未审批'
+    if (val === 'fulfilled') return '审核通过'
+    if (val === 'rejected') return '审核退回'
+    return '未审核'
   }
   module.exports = {
     formatDate: formatDate,
@@ -22,18 +22,25 @@
 </wxs>
 
 <block wx:if="{{record}}">
-  <t-cell title="巡检人员" note="{{record.user.name}}" />
+  <t-cell title="巡检人员" note="{{record.author.name}}" />
   <t-cell title="巡检时间" note="{{utils.formatDate(record.createdAt)}}" />
   <block wx:if="{{record.approve !== 'pending'}}">
-    <t-cell title="审批人员" note="{{record.approver && record.approver.name}}" />
-    <t-cell title="审批时间" note="{{utils.formatDate(record.approvedAt)}}" />
+    <t-cell title="审核人员" note="{{record.approver && record.approver.name}}" />
+    <t-cell title="审核时间" note="{{utils.formatDate(record.approvedAt)}}" />
   </block>
-  <t-cell title="审批状态" note="{{utils.approveToText(record.approve)}}" />
-  <t-cell wx:if="{{record.approve === 'rejected'}}" title="驳回原因" description="{{record.comment}}" />
+  <t-cell title="审核状态" note="{{utils.approveToText(record.approve)}}" />
+  <t-cell wx:if="{{record.approve !== 'pending'}}" title="审核说明" description="{{record.comment}}" />
   <view class="t">{{record.title}}</view>
   <view class="c">{{record.content}}</view>
   <view class="h">
     <t-image wx:for="{{record.photo}}" wx:key="index" src="{{item}}" mode="widthFix" width="100%" height="auto" shape="round" />
+  </view>
+  <view wx:if="{{role === 'admin' && record.approve === 'pending'}}">
+    <t-textarea t-class="r" t-class-textarea="rt" label="审核说明" maxlength="200" indicator model:value="{{comment}}" />
+    <view class="x">
+      <t-button block theme="danger" bind:tap="onReject">审核退回</t-button>
+      <t-button block theme="primary" bind:tap="onFulfill">审核通过</t-button>
+    </view>
   </view>
   <view class="z"></view>
 </block>

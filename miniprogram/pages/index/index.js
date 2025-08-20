@@ -1,10 +1,11 @@
-const { getUserId } = require('../../utils/utils')
+const app = getApp()
 
 Page({
   data: {
     records: [],
     isRefresh: false,
     isLower: false,
+    showAdd: app.global.user.role !== 'admin',
     showAddDialog: false,
   },
 
@@ -12,57 +13,62 @@ Page({
   pageNumber: 1,
   nomore: false,
 
-  async onReady() {
-    wx.showLoading({ mask: true, title: '加载中' })
-    const userId = await getUserId()
+  // async onReady() {
+  //   wx.showLoading({ mask: true, title: '加载中' })
+  //   const { _id, role, street } = app.global.user
+  //   const { data } = await wx.cloud.models.report.list({
+  //     filter: { where: role === 'admin' ? { street: { $in: street } } : { author: { $eq: _id } } },
+  //     orderBy: [{ updatedAt: "desc" }],
+  //     pageSize: this.pageSize,
+  //     pageNumber: this.pageNumber,
+  //     select: { $master: true, author: { name: true }, approver: { name: true } },
+  //   })
+  //   this.setData({ records: data.records })
+  //   wx.hideLoading()
+  // },
+
+  async loadPageOne() {
+    this.nomore = false
+    this.pageNumber = 1
+    const { _id, role, street } = app.global.user
     const { data } = await wx.cloud.models.report.list({
-      filter: { where: { user: { $eq: userId } } },
+      filter: { where: role === 'admin' ? { street: { $in: street } } : { author: { $eq: _id } } },
       orderBy: [{ updatedAt: "desc" }],
       pageSize: this.pageSize,
       pageNumber: this.pageNumber,
-      select: { $master: true, user: { name: true }, approver: { name: true } },
+      select: { $master: true, author: { name: true }, approver: { name: true } },
     })
     this.setData({ records: data.records })
-    wx.hideLoading()
   },
 
-  onShow() {
+  async onShow() {
     if (typeof this.getTabBar === 'function') {
       this.getTabBar(tabBar => {
         tabBar.setData({ value: 'index' })
       })
     }
+    wx.showLoading({ mask: true, title: '加载中' })
+    await this.loadPageOne()
+    wx.hideLoading()
   },
 
   async onRefresh() {
-    this.nomore = false
-    this.pageNumber = 1
     this.setData({ isRefresh: true })
-    const userId = await getUserId()
-    const { data } = await wx.cloud.models.report.list({
-      filter: { where: { user: { $eq: userId } } },
-      orderBy: [{ updatedAt: "desc" }],
-      pageSize: this.pageSize,
-      pageNumber: this.pageNumber,
-      select: { $master: true, user: { name: true }, approver: { name: true } },
-    })
-    this.setData({
-      records: data.records,
-      isRefresh: false,
-    })
+    await this.loadPageOne()
+    this.setData({ isRefresh: false })
   },
 
   async onLower() {
     if (this.nomore) return
     this.pageNumber++
     this.setData({ isLower: true })
-    const userId = await getUserId()
+    const { _id, role, street } = app.global.user
     const { data } = await wx.cloud.models.report.list({
-      filter: { where: { user: { $eq: userId } } },
+      filter: { where: role === 'admin' ? { street: { $in: street } } : { author: { $eq: _id } } },
       orderBy: [{ updatedAt: "desc" }],
       pageSize: this.pageSize,
       pageNumber: this.pageNumber,
-      select: { $master: true, user: { name: true }, approver: { name: true } },
+      select: { $master: true, author: { name: true }, approver: { name: true } },
     })
     this.nomore = data.records.length < this.pageSize
     this.setData({
@@ -72,11 +78,8 @@ Page({
   },
 
   onAddClick() {
-    const profile = wx.getStorageSync('profile')
-    if (
-      typeof profile === 'object' && profile.name &&
-      profile.phone && profile.org_name
-    ) {
+    const user = app.global.user
+    if (user.name && user.phone && user.org_name && user.org_street) {
       wx.navigateTo({ url: '/pages/report/index' })
       return
     }

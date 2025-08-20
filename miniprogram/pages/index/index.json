@@ -1,6 +1,6 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "智慧安消管理",
+  "navigationBarTitleText": "东丽消防",
   "usingComponents": {
     "t-pull-down-refresh": "tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
     "t-image": "tdesign-miniprogram/image/image",
