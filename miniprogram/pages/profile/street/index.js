@@ -32,18 +32,18 @@ Page({
       return this.setData({ records: [] })
     }
     wx.showLoading({ mask: true, title: '加载中' })
-    const { data } = await wx.cloud.models.company.list({
+    const { data } = await wx.cloud.models.companies.list({
       filter: {
+        relateWhere: {
+          street: { where: { code: { $eq: this.data.street.value[0] } } }
+        },
         where: {
-          $and: [
-            { name: { $search: this.data.search } },
-            { street_code: { $eq: this.data.street.value[0] } },
-          ]
+          name: { $search: this.data.search }
         }
       },
       pageSize: 100,
       pageNumber: 1,
-      select: { name: true, address: true, street: true, street_code: true }
+      select: { name: true, address: true, street: { name: true, code: true } }
     })
     this.setData({ records: data.records })
     wx.hideLoading()
@@ -85,9 +85,13 @@ Page({
     const { _id } = app.global.user
     await wx.cloud.models.users.update({
       filter: { where: { _id: { $eq: _id } } },
-      data: { company: { _id: record._id } }
+      data: {
+        company: { _id: record._id },
+        street: [{ _id: record.street._id }],
+      }
     })
     app.global.user.company = record
+    app.global.user.street = [record.street]
     wx.navigateBack()
   },
 })

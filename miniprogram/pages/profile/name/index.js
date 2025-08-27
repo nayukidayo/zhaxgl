@@ -17,6 +17,6 @@ Page({
   },
 
   onReady() {
-    this.setData({ name: app.global.user.name })
+    this.setData({ name: app.global.user.name || '' })
   },
 })

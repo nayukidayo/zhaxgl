@@ -4,11 +4,9 @@ Page({
   data: {
     name: '',
     phone: '',
-    company: {
-      name: '',
-      street: '',
-      address: '',
-    }
+    company: '',
+    address: '',
+    street: '',
   },
 
   onLogoutClick() {
@@ -21,11 +19,13 @@ Page({
     if (typeof this.getTabBar === 'function') {
       this.getTabBar().setData({ value: 'profile' })
     }
-    const user = app.global.user
+    const { name, phone, company, street } = app.global.user
     this.setData({
-      name: user.name || '',
-      phone: user.phone || '',
-      company: user.company || {}
+      name: name || '',
+      phone: phone,
+      company: company.name || '',
+      address: company.address || '',
+      street: street ? street[0].name : '',
     })
   },
 })

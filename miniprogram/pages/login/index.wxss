@@ -1,17 +1,32 @@
 .q {
-  margin-top: 150rpx;
+  height: 80vh;
   display: flex;
   flex-direction: column;
-  padding: 50rpx;
+  align-items: center;
+  padding: 0 50rpx;
 }
 
-.w {
-  font-size: var(--td-font-size-xl);
-  font-weight: bold;
+.m {
+  width: 50%;
+  margin-top: 15vh;
+  margin-bottom: auto;
 }
 
-.e {
-  font-size: var(--td-font-size-base);
-  color: var(--td-text-color-secondary);
-  margin: 20rpx 0 60rpx;
+.f {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+.y {
+  --td-checkbox-vertical-padding: 40rpx 0;
+}
+
+.n {
+  color: var(--td-brand-color);
+}
+
+.t {
+  gap: 20rpx;
+  margin-top: 20rpx;
 }

@@ -27,7 +27,7 @@ Page({
 
   async onAddClick() {
     const { _id, company } = app.global.user
-    if (!company) {
+    if (!company._id) {
       const res = await wx.showModal({ title: '请先完善个人资料' })
       if (res.confirm) {
         wx.switchTab({ url: '/pages/profile/index' })
@@ -36,7 +36,7 @@ Page({
     }
     wx.showLoading({ mask: true, title: '加载中' })
     const { data } = await wx.cloud.models.reports.create({
-      data: { author: { _id } }
+      data: { author: { _id }, company: { _id: company._id } }
     })
     wx.navigateTo({ url: '/pages/report/index?report=' + data.id })
   },
@@ -72,7 +72,6 @@ Page({
     date.setMonth(date.getMonth() + 1)
     const end = date.getTime()
     const { _id } = app.global.user
-    // const _id = '8c9e276668abf1490353e36d202a074b'
     const { data } = await wx.cloud.models.reports.list({
       filter: {
         where: {

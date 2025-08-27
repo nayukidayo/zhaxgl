@@ -1,6 +1,8 @@
 {
-  "navigationBarTitleText": "登录东丽消防",
+  "navigationBarTitleText": "天津东丽消防",
   "usingComponents": {
-    "t-button": "tdesign-miniprogram/button/button"
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
+    "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group"
   }
 }

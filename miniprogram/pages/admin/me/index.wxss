@@ -1,0 +1,8 @@
+page {
+  background-color: var(--td-bg-color-page);
+}
+
+.tl {
+  margin-top: 40rpx;
+  --td-cell-title-color: var(--td-error-color)
+}

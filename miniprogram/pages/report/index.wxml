@@ -19,11 +19,13 @@
 <t-cell wx:for="{{titles}}" wx:key="item" title="{{item}}" hover arrow bind:click="onKindClick" mark:index="{{index}}" />
 <block wx:if="{{record}}">
   <t-button wx:if="{{!record.publish}}" t-class="tb" block theme="primary" bind:tap="onSubmitTap">提交</t-button>
-  <block wx:if="{{record.approve==='ok'||record.approve==='ng'}}">
-    <t-cell t-class="ta" title="审核人员" note="{{record.approver.name}}" />
+  <view wx:if="{{record.approve==='ok'||record.approve==='ng'}}" class="p">
+    <t-cell t-class="ta" title="提交人员" note="{{record.author.name}}" />
+    <t-cell title="提交时间" note="{{utils.formatDate(record.publishedAt)}}" />
+    <t-cell title="审核人员" note="{{record.approveBy.name}}" />
     <t-cell title="审核时间" note="{{utils.formatDate(record.approvedAt)}}" />
     <t-cell title="审核结果" note="{{utils.approveToText(record.approve)}}" />
     <t-cell title="审核信息" description="{{record.approveMsg}}" bordered="{{false}}" />
     <view class="z"></view>
-  </block>
+  </view>
 </block>

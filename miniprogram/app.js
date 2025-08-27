@@ -1,4 +1,5 @@
 const { init } = require("@cloudbase/wx-cloud-client-sdk");
+// MySQL kita s7QmN_{,Eu82
 
 App({
   onLaunch() {

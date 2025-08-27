@@ -1,6 +1,6 @@
 <t-cell t-class="tm" title="名字" note="{{name}}" hover arrow required url="/pages/profile/name/index" />
 <t-cell title="手机号" note="{{phone}}" bordered="{{false}}" />
-<t-cell t-class="tm" title="街道" note="{{company.street || ''}}" hover arrow required url="/pages/profile/street/index" />
-<t-cell title="单位" description="{{company.name || ''}}" />
-<t-cell title="地址" description="{{company.address || ''}}" bordered="{{false}}" />
+<t-cell t-class="tm" title="街道" note="{{street}}" hover arrow required url="/pages/profile/street/index" />
+<t-cell title="单位" description="{{company}}" />
+<t-cell title="地址" description="{{address}}" bordered="{{false}}" />
 <t-cell t-class="tm tl" title="退出登录" hover bordered="{{false}}" bind:click="onLogoutClick" />

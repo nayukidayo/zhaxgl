@@ -33,7 +33,7 @@ Page({
     })
     const { data } = await wx.cloud.models.reports.get({
       filter: { where: { _id: { $eq: report } } },
-      select: { publish: true, approve: true, approvedAt: true, approveMsg: true, approver: { name: true } }
+      select: { publish: true, publishedAt: true, author: { name: true }, approve: true, approvedAt: true, approveMsg: true, approveBy: { name: true } }
     })
     this.setData({ titles, record: data })
   },

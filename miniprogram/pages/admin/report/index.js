@@ -1,12 +1,12 @@
+import { getMaxDate } from '../../../utils/utils'
+
 const app = getApp()
-const date = new Date()
-date.setTime(date.getTime() + 8 * 60 * 60 * 1000)
-const max = date.toISOString().slice(0, 7)
+const max = getMaxDate()
 
 Page({
   data: {
     search: '',
-    status: {
+    approve: {
       value: 'tbd',
       options: [
         { value: 'all', label: '全部状态' },
@@ -36,16 +36,14 @@ Page({
   pageNumber: 1,
   nomore: false,
 
-  async onSearch() {
-    wx.showLoading({ mask: true, title: '加载中' })
-    await this.loadPageOne()
-    wx.hideLoading()
+  onSearch() {
+    this.onRefresh()
   },
 
-  onStatusChange(e) {
+  onApproveChange(e) {
     this.setData({
       'status.value': e.detail.value
-    }, () => this.onSearch())
+    }, () => this.onRefresh())
   },
 
   onStartTap() {
@@ -76,11 +74,6 @@ Page({
     }, () => this.onSearch())
   },
 
-  async onRecordTap(e) {
-    const id = e.mark.id
-    console.log(id);
-  },
-
   async onRefresh() {
     this.setData({ isRefresh: true })
     await this.loadPageOne()
@@ -99,16 +92,46 @@ Page({
     })
   },
 
-  async onShow() {
-    if (typeof this.getTabBar === 'function') {
-      this.getTabBar().setData({ value: 'huibao' })
-    }
-    wx.showLoading({ mask: true, title: '加载中' })
-    await this.loadPageOne()
-    wx.hideLoading()
+  async onRecordTap(e) {
+    const id = e.mark.id
+    console.log(id);
+    // const a = await wx.cloud.models.b.list({
+    //   filter: { where: { _id: { $eq: 'C1ECBX97RS' } } },
+    //   select: { c: { name: true } }
+    // })
+    // console.log(a);
+  },
+
+  onShow() {
+    // if (typeof this.getTabBar === 'function') {
+    //   this.getTabBar().setData({ value: 'report' })
+    // }
+    // this.onRefresh()
+  },
+
+  async loadPageOne() {
+    this.nomore = false
+    this.pageNumber = 1
+    const records = await this.loadPage()
+    this.setData({ records })
   },
 
   async loadPage() {
+    // await new Promise(res => setTimeout(res, 300))
+    return [
+      {
+        _id: Math.random().toString(),
+        company: '无脑妇女我看妇女窝囊废',
+        approve: 'tbd',
+        publishedAt: Date.now()
+      },
+      {
+        _id: Math.random().toString(),
+        company: '无脑妇女我看妇女窝囊废无脑妇女我看妇女窝囊废无脑妇女我看妇女窝囊废无脑妇女我看妇女窝囊废',
+        approve: 'ok',
+        publishedAt: Date.now()
+      },
+    ]
     const start = new Date(this.data.start.value).getTime()
     const date = new Date(this.data.end.value)
     date.setMonth(date.getMonth() + 1)
@@ -136,10 +159,4 @@ Page({
     return data.records
   },
 
-  async loadPageOne() {
-    this.nomore = false
-    this.pageNumber = 1
-    const records = await this.loadPage()
-    this.setData({ records })
-  },
 })

@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
 async function getUserByPhone(phone) {
   const { data } = await client.models.users.get({
     filter: { where: { phone: { $eq: phone } } },
-    select: { name: true, phone: true, role: true, street_code: true, company: { name: true, address: true, street: true, street_code: true } }
+    select: { name: true, phone: true, role: true, street: { name: true, code: true }, company: { name: true, address: true } }
   })
   return data
 }

@@ -1,14 +1,17 @@
 {
   "pages": [
     "pages/login/index",
+    "pages/admin/report/index",
+    "pages/admin/stat/index",
+    "pages/admin/me/index",
     "pages/home/index",
     "pages/report/index",
     "pages/report/kind/index",
     "pages/profile/index",
     "pages/profile/name/index",
     "pages/profile/street/index",
-    "pages/index/index",
-    "pages/review/index"
+    "pages/huibao/index",
+    "pages/stat/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",
@@ -22,6 +25,15 @@
       },
       {
         "pagePath": "pages/profile/index"
+      },
+      {
+        "pagePath": "pages/admin/report/index"
+      },
+      {
+        "pagePath": "pages/admin/stat/index"
+      },
+      {
+        "pagePath": "pages/admin/me/index"
       }
     ]
   },
