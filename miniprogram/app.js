@@ -8,6 +8,6 @@ App({
     init(wx.cloud)
   },
   global: {
-    user: wx.getStorageSync('user') || {}
+    user: {}
   }
 });

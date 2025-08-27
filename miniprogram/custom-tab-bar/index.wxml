@@ -1,4 +1,4 @@
-<t-tab-bar t-class="a" sp value="{{value}}" bindchange="onChange">
+<t-tab-bar t-class="a" split="{{false}}" value="{{value}}" bindchange="onChange">
   <t-tab-bar-item wx:for="{{list}}" wx:key="value" value="{{item.value}}" icon="{{item.icon}}">
     {{item.label}}
   </t-tab-bar-item>

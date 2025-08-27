@@ -2,14 +2,10 @@ page {
   background-color: var(--td-bg-color-page);
 }
 
-.w {
+.ti {
   margin: 40rpx 0;
 }
 
-.t {
-  height: 300rpx;
-}
-
-.s {
+.tb {
   border-radius: 0 !important;
 }

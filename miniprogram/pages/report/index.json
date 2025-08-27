@@ -1,9 +1,7 @@
 {
   "navigationBarTitleText": "新建汇报",
   "usingComponents": {
-    "t-input": "tdesign-miniprogram/input/input",
-    "t-upload": "tdesign-miniprogram/upload/upload",
-    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-cell": "tdesign-miniprogram/cell/cell",
     "t-button": "tdesign-miniprogram/button/button"
   }
 }

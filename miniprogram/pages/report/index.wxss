@@ -1,4 +1,4 @@
-page {
+/* page {
   background-color: var(--td-bg-color-page);
 }
 
@@ -24,4 +24,21 @@ page {
 
 .z {
   height: 250rpx;
+} */
+
+.c {
+  padding: 10rpx 20rpx;
+}
+
+.tb {
+  margin-top: 40rpx;
+  border-radius: 0 !important;
+}
+
+.ta {
+  margin-top: 40rpx;
+}
+
+.z {
+  height: 20vh;
 }

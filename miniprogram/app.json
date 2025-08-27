@@ -1,10 +1,13 @@
 {
   "pages": [
     "pages/login/index",
-    "pages/index/index",
-    "pages/profile/index",
-    "pages/me/index",
+    "pages/home/index",
     "pages/report/index",
+    "pages/report/kind/index",
+    "pages/profile/index",
+    "pages/profile/name/index",
+    "pages/profile/street/index",
+    "pages/index/index",
     "pages/review/index"
   ],
   "window": {
@@ -15,7 +18,7 @@
     "custom": true,
     "list": [
       {
-        "pagePath": "pages/index/index"
+        "pagePath": "pages/home/index"
       },
       {
         "pagePath": "pages/profile/index"

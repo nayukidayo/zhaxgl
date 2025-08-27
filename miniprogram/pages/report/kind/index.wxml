@@ -1,0 +1,16 @@
+<block wx:if="{{payload}}">
+  <view class="w" wx:for="{{payload.things}}" wx:key="label">
+    <view class="c">{{item.label}}</view>
+    <t-upload mediaType="{{mediaType}}" gridConfig="{{gridConfig}}" max="{{max}}" sizeLimit="{{sizeLimit}}" config="{{config}}" files="{{item.images}}" mark:index="{{index}}" bind:success="onSuccess" bind:remove="onRemove" disabled="{{publish}}" />
+  </view>
+  <view class="k">
+    <view>检查情况：</view>
+    <t-radio-group t-class="tc" value="{{payload.check}}" borderless bind:change="onCheckChange" readonly="{{publish}}">
+      <t-radio block="{{false}}" label="合格" value="{{0}}" />
+      <t-radio block="{{false}}" label="不合格" value="{{1}}" />
+    </t-radio-group>
+  </view>
+  <t-textarea wx:if="{{payload.check}}" t-class-textarea="tt" placeholder="请输入不合格原因" maxlength="200" indicator value="{{payload.checkMsg}}" bind:change="onCheckMsgChange" readonly="{{publish}}" />
+  <t-button wx:if="{{!publish}}" t-class="tb" block theme="primary" bind:tap="onSaveTap">保存</t-button>
+  <view class="z"></view>
+</block>

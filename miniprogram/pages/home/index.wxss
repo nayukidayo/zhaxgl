@@ -1,0 +1,32 @@
+page {
+  background-color: var(--td-bg-color-page);
+}
+
+.tc {
+  margin-top: 20rpx;
+}
+
+.te {
+  padding-top: 10vh;
+}
+
+.w {
+  height: 100%;
+}
+
+.b {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 120rpx;
+  height: 100%;
+  color: white;
+}
+
+.d {
+  background-color: #e34d59;
+}
+
+.e {
+  background-color: #ed7b2f;
+}

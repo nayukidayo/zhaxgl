@@ -1,9 +1,6 @@
 {
   "navigationBarTitleText": "个人资料",
   "usingComponents": {
-    "t-cell": "tdesign-miniprogram/cell/cell",
-    "t-image": "tdesign-miniprogram/image/image",
-    "t-picker": "tdesign-miniprogram/picker/picker",
-    "t-picker-item": "tdesign-miniprogram/picker-item/picker-item"
+    "t-cell": "tdesign-miniprogram/cell/cell"
   }
 }

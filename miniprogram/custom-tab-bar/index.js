@@ -1,8 +1,8 @@
 Component({
   data: {
-    value: 'index',
+    value: 'home',
     list: [
-      { value: 'index', label: '汇报', icon: 'article' },
+      { value: 'home', label: '汇报', icon: 'article' },
       { value: 'profile', label: '我的', icon: 'user' },
     ],
   },

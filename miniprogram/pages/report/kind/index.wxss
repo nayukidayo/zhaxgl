@@ -1,0 +1,35 @@
+.w {
+  padding: 10rpx 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.c {
+  margin-bottom: 10rpx;
+  color: var(--td-text-color-primary);
+}
+
+.k {
+  display: flex;
+  gap: 40rpx;
+  padding: 40rpx;
+  border-top: 1px solid var(--td-border-level-2-color);
+}
+
+.tc {
+  display: flex;
+  gap: 40rpx;
+}
+
+.tt {
+  background-color: var(--td-bg-color-page) !important;
+  padding: 20rpx !important;
+}
+
+.tb {
+  margin-top: 40rpx;
+  border-radius: 0 !important;
+}
+
+.z {
+  height: 50vh;
+}

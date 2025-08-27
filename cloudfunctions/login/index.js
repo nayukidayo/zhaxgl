@@ -7,19 +7,23 @@ const client = init(cloud)
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let result = await cloud.openapi.phonenumber.getPhoneNumber({
+  const result = await cloud.openapi.phonenumber.getPhoneNumber({
     code: event.code
   })
   const phone = result.phoneInfo.purePhoneNumber
-  result = await client.models.user.get({
-    filter: { where: { phone: { $eq: phone } } }
-  })
-  if (result.data._id) return result.data
-  await client.models.user.create({
+  let data = await getUserByPhone(phone)
+  if (data._id) return data
+  await client.models.users.create({
     data: { phone, _openid: cloud.getWXContext().OPENID }
   })
-  result = await client.models.user.get({
-    filter: { where: { phone: { $eq: phone } } }
+  data = await getUserByPhone(phone)
+  return data
+}
+
+async function getUserByPhone(phone) {
+  const { data } = await client.models.users.get({
+    filter: { where: { phone: { $eq: phone } } },
+    select: { name: true, phone: true, role: true, street_code: true, company: { name: true, address: true, street: true, street_code: true } }
   })
-  return result.data
+  return data
 }

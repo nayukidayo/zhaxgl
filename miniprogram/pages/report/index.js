@@ -1,65 +1,40 @@
-const app = getApp()
+import kinds from '../../utils/kinds'
 
 Page({
   data: {
-    title: '',
-    content: '',
-    files: [],
-    mediaType: ['image'],
-    max: 3,
-    gridConfig: {
-      column: 4,
-      width: 160,
-      height: 160,
-    },
-    sizeLimit: {
-      size: 5,
-      unit: 'MB',
-      message: '图片大小不超过 5 MB'
-    },
-    config: {
-      count: 1,
-    },
+    titles: [],
+    record: null,
   },
 
-  onSuccess(e) {
-    this.setData({ files: e.detail.files })
+  async onKindClick(e) {
+    const report = this.data.record._id
+    const kind = `kind${e.mark.index + 1}`
+    wx.navigateTo({ url: `/pages/report/kind/index?report=${report}&kind=${kind}` })
   },
 
-  onRemove(e) {
-    const { files } = this.data;
-    files.splice(e.detail.index, 1);
-    this.setData({ files });
-  },
-
-  async onSubmit() {
-    const { title, content, files } = this.data
-    if (!title || !content || !files.length) {
-      return wx.showToast({
-        mask: true,
-        icon: 'error',
-        title: '请填写必填项',
+  async onSubmitTap() {
+    try {
+      wx.showLoading({ mask: true, title: '提交中' })
+      await wx.cloud.models.reports.update({
+        filter: { where: { _id: { $eq: this.report } } },
+        data: { publish: true, publishedAt: Date.now() },
       })
+      wx.navigateBack()
+    } catch (err) {
+      wx.showToast({ mask: true, icon: 'error', title: '提交失败' })
+      console.log(err)
     }
-    wx.showLoading({ mask: true, title: '提交中' })
-    const result = await Promise.all(files.map(v => {
-      return wx.cloud.uploadFile({
-        filePath: v.url,
-        cloudPath: v.url.split('/').at(-1),
-      })
-    }))
-    const { _id, street } = app.global.user
-    await wx.cloud.models.report.create({
-      data: {
-        title,
-        content,
-        photo: result.map(v => v.fileID),
-        author: { _id },
-        street: street[0]
-      },
-    })
-    wx.hideLoading()
-    wx.navigateBack()
   },
 
+  async onLoad({ report }) {
+    this.report = report
+    const titles = Array.from({ length: 5 }, (_, i) => {
+      return kinds[`kind${i + 1}`].title
+    })
+    const { data } = await wx.cloud.models.reports.get({
+      filter: { where: { _id: { $eq: report } } },
+      select: { publish: true, approve: true, approvedAt: true, approveMsg: true, approver: { name: true } }
+    })
+    this.setData({ titles, record: data })
+  },
 })

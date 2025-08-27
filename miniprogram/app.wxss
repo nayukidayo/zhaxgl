@@ -1,3 +1,7 @@
+/* view {
+  box-sizing: border-box;
+} */
+
 @media (prefers-color-scheme: light) {
   page, .page {
       --td-brand-color-1: #f8f1ff;

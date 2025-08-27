@@ -1,0 +1,45 @@
+<wxs module="utils">
+  function formatDate(ms) {
+    var str = getDate(ms + 8 * 60 * 60 * 1000).toISOString()
+    var ymd = str.slice(0, 10)
+    var hms = str.slice(11, 19)
+    return ymd + ' ' + hms
+  }
+  function approveToTheme(val) {
+    if (val === 'ok') return 'success'
+    if (val === 'ng') return 'danger'
+    return 'warning'
+  }
+  function approveToText(val) {
+    if (val === 'ok') return '审核通过'
+    if (val === 'ng') return '审核驳回'
+    return '等待审核'
+  }
+  module.exports = {
+    formatDate: formatDate,
+    approveToTheme: approveToTheme,
+    approveToText: approveToText,
+  }
+</wxs>
+
+<t-cell title="选择日期" note="{{date.value}}" hover arrow bind:click="onDateClick" />
+<t-date-time-picker auto-close visible="{{date.visible}}" mode="month" value="{{date.value}}" format="YYYY-MM" start="{{date.start}}" end="{{date.end}}" bind:change="onDateChange" />
+<t-swipe-cell wx:for="{{records}}" wx:key="_id" t-class="tc">
+  <t-cell title="巡检汇报" bordered="{{false}}" hover bind:click="onEdit" mark:index="{{index}}">
+    <t-tag wx:if="{{item.publish}}" slot="note" variant="light" theme="{{utils.approveToTheme(item.approve)}}">{{utils.approveToText(item.approve)}}</t-tag>
+    <t-tag wx:else slot="note" variant="light" theme="primary">未提交</t-tag>
+    <view slot="description">{{utils.formatDate(item.createdAt)}}</view>
+  </t-cell>
+  <view wx:if="{{item.publish}}" slot="right" class="b e" bind:tap="onEdit" mark:index="{{index}}">查看</view>
+  <view wx:else slot="right" class="w">
+    <view class="b e" bind:tap="onEdit" mark:index="{{index}}">编辑</view>
+    <view class="b d" bind:tap="onDelete" mark:index="{{index}}">删除</view>
+  </view>
+</t-swipe-cell>
+<t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
+  <view slot="description">
+    <view>暂无数据</view>
+    <view>请尝试切换筛选条件</view>
+  </view>
+</t-empty>
+<t-fab style="right: 64rpx; bottom: calc(200rpx + env(safe-area-inset-bottom));" icon="add" bind:click="onAddClick"></t-fab>

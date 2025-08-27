@@ -1,29 +1,11 @@
 page {
-  --td-cell-hover-color: var(--td-brand-color-light);
+  background-color: var(--td-bg-color-page);
 }
 
-.m {
-  width: fit-content;
-  margin: 40rpx auto;
-  padding: 0;
-  background-color: transparent;
-  border: none;
+.tm {
+  margin-top: 40rpx;
 }
 
-.m::after {
-  border: none;
-}
-
-.a {
-  background-color: var(--td-gray-color-1);
-  border-radius: 50%;
-}
-
-.n {
-  --td-cell-note-color: var(--td-font-gray-2);
-}
-
-.g {
-  margin-top: 60rpx;
+.tl {
   --td-cell-title-color: var(--td-error-color)
 }

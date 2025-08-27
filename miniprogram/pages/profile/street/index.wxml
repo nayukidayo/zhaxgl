@@ -1,0 +1,26 @@
+<block wx:if="{{showSearch}}">
+  <view class="s">
+    <t-search t-class="ts" placeholder="搜索单位" model:value="{{search}}" bind:submit="onSearch" bind:clear="onSearch" />
+    <view class="q" bind:tap="toggleShowSearch">取消</view>
+  </view>
+  <view class="g" wx:for="{{records}}" wx:key="_id" mark:index="{{index}}" bind:tap="onItemTap">
+    <view class="c">{{item.name}}</view>
+    <view class="a">{{item.address}}</view>
+  </view>
+  <t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
+    <view slot="description">
+      <view>暂无数据</view>
+      <view>请尝试切换筛选条件或重新输入关键词</view>
+    </view>
+  </t-empty>
+  <view class="z"></view>
+</block>
+<block wx:else>
+  <t-cell title="选择街道" note="{{street.label[0]}}" arrow bordered="{{false}}" bind:click="onStreetClick" />
+  <t-picker visible="{{street.visible}}" value="{{street.value}}" title="选择街道" cancelBtn="取消" confirmBtn="确认" bind:change="onStreetChange">
+    <t-picker-item options="{{street.options}}"></t-picker-item>
+  </t-picker>
+  <t-cell title="选择单位" description="{{record.name||''}}" arrow bordered="{{false}}" bind:click="toggleShowSearch" />
+  <t-cell wx:if="{{record.name}}" title="单位地址" description="{{record.address}}" bordered="{{false}}" />
+  <t-button t-class="tb" block theme="primary" bind:tap="onSaveTap">保存</t-button>
+</block>
