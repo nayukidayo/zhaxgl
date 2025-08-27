@@ -3,6 +3,6 @@
   <t-cell title="手机号" note="{{phone}}" />
 </t-cell-group>
 <t-cell-group title="管理的街道">
-  <t-cell wx:for="{{street}}" wx:key="item" title="{{item}}" />
+  <t-cell wx:for="{{street}}" wx:key="_id" title="{{item.name}}" />
 </t-cell-group>
 <t-cell t-class="tl" title="退出登录" hover bordered="{{false}}" bind:click="onLogoutClick" />

@@ -28,4 +28,16 @@
     <t-cell title="审核信息" description="{{record.approveMsg}}" bordered="{{false}}" />
     <view class="z"></view>
   </view>
+  <view wx:elif="{{admin.isAdmin}}">
+    <view class="k">
+      <view>审核结果：</view>
+      <t-radio-group t-class="tc" value="{{admin.approve}}" borderless bind:change="onApproveChange">
+        <t-radio block="{{false}}" label="通过" value="ok" />
+        <t-radio block="{{false}}" label="驳回" value="ng" />
+      </t-radio-group>
+    </view>
+    <t-textarea wx:if="{{admin.approve==='ng'}}" t-class-textarea="tt" placeholder="请输入不合格原因" maxlength="200" indicator value="{{admin.approveMsg}}" bind:change="onApproveMsgChange" />
+    <t-button t-class="tb" block theme="primary" bind:tap="onSaveTap">提交</t-button>
+    <view class="z"></view>
+  </view>
 </block>

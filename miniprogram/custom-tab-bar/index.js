@@ -9,7 +9,7 @@ Component({
     ],
     listAdmin: [
       { value: 'report', label: '汇报', icon: 'article' },
-      { value: 'stat', label: '统计', icon: 'assignment-checked' },
+      // { value: 'stat', label: '统计', icon: 'assignment-checked' },
       { value: 'me', label: '我的', icon: 'user' },
     ],
   },
@@ -24,8 +24,13 @@ Component({
   methods: {
     onChange(e) {
       const value = e.detail.value
-      wx.switchTab({ url: `/pages/${value}/index` })
       this.setData({ value })
+      const { role } = app.global.user
+      if (role === 'admin') {
+        wx.switchTab({ url: `/pages/admin/${value}/index` })
+      } else {
+        wx.switchTab({ url: `/pages/${value}/index` })
+      }
     },
   }
 })

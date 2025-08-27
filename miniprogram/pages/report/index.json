@@ -2,6 +2,9 @@
   "navigationBarTitleText": "新建汇报",
   "usingComponents": {
     "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-radio": "tdesign-miniprogram/radio/radio",
+    "t-radio-group": "tdesign-miniprogram/radio-group/radio-group",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
     "t-button": "tdesign-miniprogram/button/button"
   }
 }

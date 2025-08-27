@@ -47,7 +47,7 @@
   </t-empty>
   <block wx:else>
     <view class="m" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onRecordTap">
-      <view class="c">{{item.company}}</view>
+      <view class="c">{{item.company.name}}</view>
       <view class="g">
         <t-tag variant="light" theme="{{utils.approveToTheme(item.approve)}}">{{utils.approveToText(item.approve)}}</t-tag>
         <view class="t">{{utils.formatDate(item.publishedAt)}}</view>

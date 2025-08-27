@@ -18,3 +18,20 @@
 .p {
   --td-cell-vertical-padding: 10rpx;
 }
+
+.k {
+  display: flex;
+  gap: 40rpx;
+  padding: 40rpx;
+  border-top: 1px solid var(--td-border-level-2-color);
+}
+
+.tc {
+  display: flex;
+  gap: 40rpx;
+}
+
+.tt {
+  background-color: var(--td-bg-color-page) !important;
+  padding: 20rpx !important;
+}

@@ -42,7 +42,7 @@ Page({
 
   onApproveChange(e) {
     this.setData({
-      'status.value': e.detail.value
+      'approve.value': e.detail.value
     }, () => this.onRefresh())
   },
 
@@ -81,7 +81,7 @@ Page({
   },
 
   async onLower() {
-    if (this.nomore) return
+    if (this.nomore || this.data.records.length < this.pageSize) return
     this.pageNumber++
     this.setData({ isLower: true })
     const records = await this.loadPage()
@@ -92,21 +92,15 @@ Page({
     })
   },
 
-  async onRecordTap(e) {
-    const id = e.mark.id
-    console.log(id);
-    // const a = await wx.cloud.models.b.list({
-    //   filter: { where: { _id: { $eq: 'C1ECBX97RS' } } },
-    //   select: { c: { name: true } }
-    // })
-    // console.log(a);
+  onRecordTap(e) {
+    wx.navigateTo({ url: '/pages/report/index?report=' + e.mark.id })
   },
 
   onShow() {
-    // if (typeof this.getTabBar === 'function') {
-    //   this.getTabBar().setData({ value: 'report' })
-    // }
-    // this.onRefresh()
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar().setData({ value: 'report' })
+    }
+    this.onRefresh()
   },
 
   async loadPageOne() {
@@ -117,44 +111,30 @@ Page({
   },
 
   async loadPage() {
-    // await new Promise(res => setTimeout(res, 300))
-    return [
-      {
-        _id: Math.random().toString(),
-        company: '无脑妇女我看妇女窝囊废',
-        approve: 'tbd',
-        publishedAt: Date.now()
-      },
-      {
-        _id: Math.random().toString(),
-        company: '无脑妇女我看妇女窝囊废无脑妇女我看妇女窝囊废无脑妇女我看妇女窝囊废无脑妇女我看妇女窝囊废',
-        approve: 'ok',
-        publishedAt: Date.now()
-      },
-    ]
     const start = new Date(this.data.start.value).getTime()
     const date = new Date(this.data.end.value)
     date.setMonth(date.getMonth() + 1)
     const end = date.getTime()
     const and = [
       { publish: { $eq: true } },
-      { publishStreet: { $in: app.global.user.street_code } },
-      { createdAt: { $gte: start } },
-      { createdAt: { $lt: end } },
+      { publishedAt: { $gte: start } },
+      { publishedAt: { $lt: end } },
     ]
-    const status = this.data.status.value
-    if (status !== 'all') {
-      and.push({ approve: { $eq: status } })
+    const approve = this.data.approve.value
+    if (approve !== 'all') {
+      and.push({ approve: { $eq: approve } })
     }
-    // const serach = this.data.search
-    // if (serach) {
-    //   and.push({})
-    // }
+    const relateWhere = {}
+    const serach = this.data.search.trim()
+    if (serach) {
+      relateWhere.company = { where: { name: { $search: serach } } }
+    }
     const { data } = await wx.cloud.models.reports.list({
-      filter: { where: { $and: and } },
-      orderBy: [{ createdAt: 'desc' }],
+      filter: { relateWhere, where: { $and: and } },
+      orderBy: [{ publishedAt: 'desc' }],
       pageSize: this.pageSize,
       pageNumber: this.pageNumber,
+      select: { approve: true, publishedAt: true, company: { name: true } }
     })
     return data.records
   },

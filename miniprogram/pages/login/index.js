@@ -35,7 +35,6 @@ Page({
       data: { code: e.detail.code }
     })
     app.global.user = result
-    console.log(result);
     wx.setStorageSync('phone', result.phone)
     if (result.role === 'admin') {
       wx.switchTab({ url: '/pages/admin/report/index' })

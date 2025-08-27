@@ -1,7 +1,14 @@
 import kinds from '../../utils/kinds'
 
+const app = getApp()
+
 Page({
   data: {
+    admin: {
+      isAdmin: app.global.user.role === 'admin',
+      approve: 'ok',
+      approveMsg: '',
+    },
     titles: [],
     record: null,
   },
@@ -22,6 +29,33 @@ Page({
       wx.navigateBack()
     } catch (err) {
       wx.showToast({ mask: true, icon: 'error', title: '提交失败' })
+      console.log(err)
+    }
+  },
+
+  onApproveChange(e) {
+    this.setData({ 'admin.approve': e.detail.value })
+  },
+
+  onApproveMsgChange(e) {
+    this.setData({ 'admin.approveMsg': e.detail.value })
+  },
+
+  async onSaveTap() {
+    try {
+      wx.showLoading({ mask: true, title: '提交中' })
+      await wx.cloud.models.reports.update({
+        filter: { where: { _id: { $eq: this.report } } },
+        data: {
+          approve: this.data.admin.approve,
+          approveMsg: this.data.admin.approveMsg,
+          approvedAt: Date.now(),
+          approveBy: { _id: app.global.user._id },
+        }
+      })
+      wx.navigateBack()
+    } catch (err) {
+      wx.hideLoading()
       console.log(err)
     }
   },
