@@ -1,0 +1,10 @@
+<view class="q" wx:if="{{show}}">
+  <image class="m" src="/images/logo.jpg" mode="widthFix"></image>
+  <view class="n">※ 此服务仅限天津东丽消防内部员工使用</view>
+  <view class="t">
+    <view>若您是内部员工</view>
+    <view>请确认登录的手机号是否正确</view>
+    <view>如有问题请联系街道联络员</view>
+  </view>
+  <t-button block theme="primary" bind:tap="onOkTap">我是内部员工</t-button>
+</view>

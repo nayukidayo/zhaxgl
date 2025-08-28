@@ -1,11 +1,4 @@
-<view class="q" wx:if="{{show}}">
+<view class="q">
   <image class="m" src="/images/logo.jpg" mode="widthFix"></image>
   <t-button block theme="primary" open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber">手机号登录</t-button>
-  <view class="f t">※ 此服务仅供消防系统内部使用</view>
-  <!-- <view class="f y">
-    <t-checkbox-group borderless bind:change="onCheckChange">
-      <t-checkbox label="阅读并同意以下协议" icon="rectangle" />
-    </t-checkbox-group>
-    <navigator class="n" url="/page/navigate/navigate?title=navigate">《服务协议》</navigator>
-  </view> -->
 </view>

@@ -11,22 +11,3 @@
   margin-top: 15vh;
   margin-bottom: auto;
 }
-
-.f {
-  align-self: flex-start;
-  display: flex;
-  align-items: center;
-}
-
-.y {
-  --td-checkbox-vertical-padding: 40rpx 0;
-}
-
-.n {
-  color: var(--td-brand-color);
-}
-
-.t {
-  gap: 20rpx;
-  margin-top: 20rpx;
-}
