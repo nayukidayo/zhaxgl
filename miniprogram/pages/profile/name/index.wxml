@@ -1,2 +1,0 @@
-<t-input t-class="ti" model:value="{{name}}" />
-<t-button t-class="tb" block theme="primary" bind:tap="onSaveTap">保存</t-button>

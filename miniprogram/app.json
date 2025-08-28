@@ -6,8 +6,6 @@
     "pages/report/index",
     "pages/report/kind/index",
     "pages/profile/index",
-    "pages/profile/name/index",
-    "pages/profile/street/index",
     "pages/admin/report/index",
     "pages/admin/stat/index",
     "pages/admin/me/index"

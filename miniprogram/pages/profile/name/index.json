@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "名字",
-  "usingComponents": {
-    "t-input": "tdesign-miniprogram/input/input",
-    "t-button": "tdesign-miniprogram/button/button"
-  }
-}

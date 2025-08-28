@@ -18,11 +18,9 @@
 
 <t-cell wx:for="{{titles}}" wx:key="item" title="{{item}}" hover arrow bind:click="onKindClick" mark:index="{{index}}" />
 <block wx:if="{{record}}">
-  <t-button wx:if="{{!record.publish}}" t-class="tb" block theme="primary" bind:tap="onSubmitTap">提交</t-button>
+  <t-button wx:if="{{!record.publish}}" t-class="tb" block theme="primary" bind:tap="onPublishTap">提交</t-button>
   <view wx:if="{{record.approve==='ok'||record.approve==='ng'}}" class="p">
-    <t-cell t-class="ta" title="提交人员" note="{{record.author.name}}" />
-    <t-cell title="提交时间" note="{{utils.formatDate(record.publishedAt)}}" />
-    <t-cell title="审核人员" note="{{record.approveBy.name}}" />
+    <t-cell title="审核人员" note="{{record.approveBy}}" />
     <t-cell title="审核时间" note="{{utils.formatDate(record.approvedAt)}}" />
     <t-cell title="审核结果" note="{{utils.approveToText(record.approve)}}" />
     <t-cell title="审核信息" description="{{record.approveMsg}}" bordered="{{false}}" />
@@ -37,7 +35,7 @@
       </t-radio-group>
     </view>
     <t-textarea wx:if="{{admin.approve==='ng'}}" t-class-textarea="tt" placeholder="请输入不合格原因" maxlength="200" indicator value="{{admin.approveMsg}}" bind:change="onApproveMsgChange" />
-    <t-button t-class="tb" block theme="primary" bind:tap="onSaveTap">提交</t-button>
+    <t-button t-class="tb" block theme="primary" bind:tap="onApproveTap">提交</t-button>
     <view class="z"></view>
   </view>
 </block>

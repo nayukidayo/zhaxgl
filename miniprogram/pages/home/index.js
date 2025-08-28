@@ -1,7 +1,7 @@
+import { getMaxDate, toStartEnd } from '../../utils/utils'
+
 const app = getApp()
-const date = new Date()
-date.setTime(date.getTime() + 8 * 60 * 60 * 1000)
-const max = date.toISOString().slice(0, 7)
+const max = getMaxDate()
 
 Page({
   data: {
@@ -12,7 +12,13 @@ Page({
       end: max,
     },
     records: [],
+    isRefresh: false,
+    isLower: false,
   },
+
+  pageSize: 10,
+  pageNumber: 1,
+  hasNextPage: false,
 
   onDateClick() {
     this.setData({ 'date.visible': true })
@@ -22,69 +28,81 @@ Page({
     this.setData({
       'date.visible': false,
       'date.value': e.detail.value,
-    }, () => this.serach())
+    }, () => this.onRefresh())
   },
 
   async onAddClick() {
-    const { _id, company } = app.global.user
-    if (!company._id) {
-      const res = await wx.showModal({ title: '请先完善个人资料' })
-      if (res.confirm) {
-        wx.switchTab({ url: '/pages/profile/index' })
-      }
-      return
+    try {
+      wx.showLoading({ mask: true, title: '加载中' })
+      const { data } = await wx.cloud.models.huibao.create({
+        data: { company: { _id: app.global.user.company[0]._id } }
+      })
+      wx.hideLoading()
+      wx.navigateTo({ url: '/pages/report/index?report=' + data.id })
+    } catch (err) {
+      wx.showToast({ mask: true, icon: 'error', title: '新建失败' })
+      console.log(err)
     }
-    wx.showLoading({ mask: true, title: '加载中' })
-    const { data } = await wx.cloud.models.reports.create({
-      data: { author: { _id }, company: { _id: company._id } }
-    })
-    wx.navigateTo({ url: '/pages/report/index?report=' + data.id })
   },
 
   onEdit(e) {
-    const report = this.data.records[e.mark.index]._id
-    wx.navigateTo({ url: '/pages/report/index?report=' + report })
+    wx.navigateTo({ url: '/pages/report/index?report=' + e.mark.id })
   },
 
-  async onDelete(e) {
-    const { index } = e.mark
-    const { records } = this.data
-    const res = await wx.showModal({ title: '确认删除' })
-    if (!res.confirm) return
-    await wx.cloud.models.reports.delete({
-      filter: { where: { _id: { $eq: records[index]._id } } }
+  // async onDelete(e) {
+  //   const { index } = e.mark
+  //   const { records } = this.data
+  //   const res = await wx.showModal({ title: '确认删除' })
+  //   if (!res.confirm) return
+  //   await wx.cloud.models.huibao.delete({
+  //     filter: { where: { _id: { $eq: records[index]._id } } }
+  //   })
+  //   records.splice(index, 1)
+  //   this.setData({ records })
+  // },
+
+  async onRefresh() {
+    this.setData({ isRefresh: true })
+    await this.loadPageOne()
+    this.setData({ isRefresh: false })
+  },
+
+  async onLower() {
+    if (!this.hasNextPage) return
+    this.pageNumber++
+    this.setData({ isLower: true })
+    const records = await this.loadPage()
+    this.setData({
+      isLower: false,
+      records: this.data.records.concat(records),
     })
-    records.splice(index, 1)
-    this.setData({ records })
   },
 
   onShow() {
     if (typeof this.getTabBar === 'function') {
       this.getTabBar().setData({ value: 'home' })
     }
-    this.serach()
+    this.onRefresh()
   },
 
-  async serach() {
-    wx.showLoading({ mask: true, title: '加载中' })
-    const date = new Date(this.data.date.value)
-    const start = date.getTime()
-    date.setMonth(date.getMonth() + 1)
-    const end = date.getTime()
-    const { _id } = app.global.user
-    const { data } = await wx.cloud.models.reports.list({
-      filter: {
-        where: {
-          $and: [
-            { author: { $eq: _id } },
-            { createdAt: { $gte: start } },
-            { createdAt: { $lt: end } },
-          ]
-        }
-      },
-      select: { publish: true, approve: true, createdAt: true }
+  async loadPageOne() {
+    this.pageNumber = 1
+    const records = await this.loadPage()
+    this.setData({ records })
+  },
+
+  async loadPage() {
+    const { start, end } = toStartEnd(this.data.date.value)
+    const relateWhere = { company: { where: { staffPhone: { $eq: app.global.user.phone } } } }
+    const where = { $and: [{ createdAt: { $gte: start } }, { createdAt: { $lt: end } }] }
+    const { data } = await wx.cloud.models.huibao.list({
+      filter: { relateWhere, where },
+      pageSize: this.pageSize,
+      pageNumber: this.pageNumber,
+      orderBy: [{ createdAt: 'desc' }],
+      select: { company: { name: true, staffName: true }, publish: true, publishedAt: true, approve: true, createdAt: true, },
     })
-    this.setData({ records: data.records })
-    wx.hideLoading()
+    this.hasNextPage = data.records.length === this.pageSize
+    return data.records
   },
 })

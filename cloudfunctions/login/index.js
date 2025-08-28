@@ -11,19 +11,35 @@ exports.main = async (event, context) => {
     code: event.code
   })
   const phone = result.phoneInfo.purePhoneNumber
-  let data = await getUserByPhone(phone)
-  if (data._id) return data
-  await client.models.users.create({
-    data: { phone, _openid: cloud.getWXContext().OPENID }
-  })
-  data = await getUserByPhone(phone)
-  return data
+  const arr = await Promise.all([streetsFind(phone), companiesFind(phone)])
+  if (arr[0]) return arr[0]
+  return arr[1]
 }
 
-async function getUserByPhone(phone) {
-  const { data } = await client.models.users.get({
-    filter: { where: { phone: { $eq: phone } } },
-    select: { name: true, phone: true, role: true, street: { name: true, code: true }, company: { name: true, address: true } }
+async function streetsFind(phone) {
+  const { data } = await client.models.streets.list({
+    filter: { where: { contactPhone: { $eq: phone } } },
+    select: { name: true, contactName: true }
   })
-  return data
+  if (!data.records.length) return null
+  return {
+    phone,
+    name: data.records[0].contactName,
+    street: data.records,
+    role: 'admin',
+  }
+}
+
+async function companiesFind(phone) {
+  const { data } = await client.models.companies.list({
+    filter: { where: { staffPhone: { $eq: phone } } },
+    select: { name: true, address: true, street: true, staffName: true }
+  })
+  if (!data.records.length) return null
+  return {
+    phone,
+    name: data.records[0].staffName,
+    company: data.records,
+    role: 'staff',
+  }
 }

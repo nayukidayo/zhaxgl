@@ -19,13 +19,19 @@ Page({
     wx.navigateTo({ url: `/pages/report/kind/index?report=${report}&kind=${kind}` })
   },
 
-  async onSubmitTap() {
+  async onPublishTap() {
     try {
       wx.showLoading({ mask: true, title: '提交中' })
-      await wx.cloud.models.reports.update({
+      await wx.cloud.models.huibao.update({
         filter: { where: { _id: { $eq: this.report } } },
-        data: { publish: true, publishedAt: Date.now() },
+        data: {
+          publish: true,
+          publishedAt: Date.now(),
+          publishBy: app.global.user.name,
+          publishPhone: app.global.user.phone,
+        },
       })
+      wx.hideLoading()
       wx.navigateBack()
     } catch (err) {
       wx.showToast({ mask: true, icon: 'error', title: '提交失败' })
@@ -41,18 +47,21 @@ Page({
     this.setData({ 'admin.approveMsg': e.detail.value })
   },
 
-  async onSaveTap() {
+  async onApproveTap() {
     try {
       wx.showLoading({ mask: true, title: '提交中' })
-      await wx.cloud.models.reports.update({
+      await wx.cloud.models.huibao.update({
         filter: { where: { _id: { $eq: this.report } } },
         data: {
           approve: this.data.admin.approve,
           approveMsg: this.data.admin.approveMsg,
           approvedAt: Date.now(),
-          approveBy: { _id: app.global.user._id },
+          approveBy: app.global.user.name,
+          approvePhone: app.global.user.phone,
+          street: { _id: app.global.user._id }
         }
       })
+      wx.hideLoading()
       wx.navigateBack()
     } catch (err) {
       wx.hideLoading()
@@ -65,10 +74,11 @@ Page({
     const titles = Array.from({ length: 5 }, (_, i) => {
       return kinds[`kind${i + 1}`].title
     })
-    const { data } = await wx.cloud.models.reports.get({
+    const { data } = await wx.cloud.models.huibao.get({
       filter: { where: { _id: { $eq: report } } },
-      select: { publish: true, publishedAt: true, author: { name: true }, approve: true, approvedAt: true, approveMsg: true, approveBy: { name: true } }
+      select: { publish: true, approve: true, approvedAt: true, approveMsg: true, approveBy: true }
     })
+    wx.setNavigationBarTitle({ title: data.publish ? '查看汇报' : '编辑汇报' })
     this.setData({ titles, record: data })
   },
 })

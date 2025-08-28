@@ -24,22 +24,35 @@
 
 <t-cell title="选择日期" note="{{date.value}}" hover arrow bind:click="onDateClick" />
 <t-date-time-picker auto-close visible="{{date.visible}}" mode="month" value="{{date.value}}" format="YYYY-MM" start="{{date.start}}" end="{{date.end}}" bind:change="onDateChange" />
-<t-swipe-cell wx:for="{{records}}" wx:key="_id" t-class="tc">
-  <t-cell title="巡检汇报" bordered="{{false}}" hover bind:click="onEdit" mark:index="{{index}}">
-    <t-tag wx:if="{{item.publish}}" slot="note" variant="light" theme="{{utils.approveToTheme(item.approve)}}">{{utils.approveToText(item.approve)}}</t-tag>
-    <t-tag wx:else slot="note" variant="light" theme="primary">未提交</t-tag>
-    <view slot="description">{{utils.formatDate(item.createdAt)}}</view>
-  </t-cell>
-  <view wx:if="{{item.publish}}" slot="right" class="b e" bind:tap="onEdit" mark:index="{{index}}">查看</view>
-  <view wx:else slot="right" class="w">
-    <view class="b e" bind:tap="onEdit" mark:index="{{index}}">编辑</view>
-    <view class="b d" bind:tap="onDelete" mark:index="{{index}}">删除</view>
-  </view>
-</t-swipe-cell>
-<t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
-  <view slot="description">
-    <view>暂无数据</view>
-    <view>请尝试切换筛选条件</view>
-  </view>
-</t-empty>
+<t-pull-down-refresh t-class="tp" lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
+  <t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
+    <view slot="description">
+      <view>暂无数据</view>
+      <view>请尝试切换筛选条件</view>
+    </view>
+  </t-empty>
+  <block wx:else>
+    <view class="a" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onEdit">
+      <view class="s">{{item.company.name}}</view>
+      <view class="d" wx:if="{{item.publish}}">
+        <view class="f">
+          <view>提交人员：{{item.company.staffName}}</view>
+          <view>提交时间：{{utils.formatDate(item.publishedAt)}}</view>
+        </view>
+        <t-tag variant="light" theme="{{utils.approveToTheme(item.approve)}}">{{utils.approveToText(item.approve)}}</t-tag>
+      </view>
+      <view class="d" wx:else>
+        <view class="f">
+          <view>创建人员：{{item.company.staffName}}</view>
+          <view>创建时间：{{utils.formatDate(item.createdAt)}}</view>
+        </view>
+        <t-tag variant="light" theme="primary">未提交</t-tag>
+      </view>
+    </view>
+    <view class="l" wx:if="{{isLower}}">
+      <t-loading theme="dots" size="80rpx" />
+    </view>
+    <view class="z l"></view>
+  </block>
+</t-pull-down-refresh>
 <t-fab style="right: 64rpx; bottom: calc(200rpx + env(safe-area-inset-bottom));" icon="add" bind:click="onAddClick"></t-fab>

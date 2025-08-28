@@ -55,10 +55,11 @@ Page({
       payload.things.forEach((k, i) => {
         k.images = result[i].map(v => ({ url: v.fileID }))
       });
-      await wx.cloud.models.reports.update({
+      await wx.cloud.models.huibao.update({
         filter: { where: { _id: { $eq: this.report } } },
         data: { [this.kind]: JSON.stringify(payload) }
       })
+      wx.hideLoading()
       wx.navigateBack()
     } catch (err) {
       wx.showToast({ mask: true, icon: 'error', title: '保存失败' })
@@ -69,7 +70,7 @@ Page({
   async onLoad({ report, kind }) {
     this.report = report
     this.kind = kind
-    const { data } = await wx.cloud.models.reports.get({
+    const { data } = await wx.cloud.models.huibao.get({
       filter: { where: { _id: { $eq: report } } },
       select: { publish: true, [kind]: true }
     })

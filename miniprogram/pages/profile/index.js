@@ -6,7 +6,7 @@ Page({
     phone: '',
     company: '',
     address: '',
-    street: '',
+    street: ''
   },
 
   onLogoutClick() {
@@ -15,17 +15,19 @@ Page({
     wx.reLaunch({ url: '/pages/login/index' })
   },
 
+  onReady() {
+    const { name, phone, company } = app.global.user
+    this.setData({
+      name, phone,
+      company: company[0].name,
+      address: company[0].address,
+      street: company[0].street,
+    })
+  },
+
   onShow() {
     if (typeof this.getTabBar === 'function') {
       this.getTabBar().setData({ value: 'profile' })
     }
-    const { name, phone, company, street } = app.global.user
-    this.setData({
-      name: name || '',
-      phone: phone,
-      company: company.name || '',
-      address: company.address || '',
-      street: street ? street[0].name : '',
-    })
   },
 })

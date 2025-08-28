@@ -1,4 +1,5 @@
 {
+  "disableScroll": true,
   "navigationBarTitleText": "巡检汇报",
   "usingComponents": {
     "t-cell": "tdesign-miniprogram/cell/cell",
@@ -7,6 +8,8 @@
     "t-fab": "tdesign-miniprogram/fab/fab",
     "t-empty": "tdesign-miniprogram/empty/empty",
     "t-swipe-cell": "tdesign-miniprogram/swipe-cell/swipe-cell",
+    "t-pull-down-refresh": "tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
+    "t-loading": "tdesign-miniprogram/loading/loading",
     "t-button": "tdesign-miniprogram/button/button"
   }
 }

@@ -124,7 +124,10 @@ Page({
     if (approve !== 'all') {
       and.push({ approve: { $eq: approve } })
     }
-    const relateWhere = {}
+    const street = app.global.user.street.map(v => v._id)
+    const relateWhere = {
+      street: { where: { _id: { $in: street } } }
+    }
     const serach = this.data.search.trim()
     if (serach) {
       relateWhere.company = { where: { name: { $search: serach } } }
