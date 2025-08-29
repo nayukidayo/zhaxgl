@@ -1,4 +1,4 @@
-import { getMaxDate } from '../../../utils/utils'
+import { getMaxDate, toStartEnd } from '../../../utils/utils'
 
 const app = getApp()
 const max = getMaxDate()
@@ -34,7 +34,7 @@ Page({
 
   pageSize: 10,
   pageNumber: 1,
-  nomore: false,
+  hasNextPage: false,
 
   onSearch() {
     this.onRefresh()
@@ -74,6 +74,10 @@ Page({
     }, () => this.onSearch())
   },
 
+  onRecordTap(e) {
+    wx.navigateTo({ url: '/pages/report/index?report=' + e.mark.id })
+  },
+
   async onRefresh() {
     this.setData({ isRefresh: true })
     await this.loadPageOne()
@@ -81,19 +85,14 @@ Page({
   },
 
   async onLower() {
-    if (this.nomore || this.data.records.length < this.pageSize) return
+    if (!this.hasNextPage) return
     this.pageNumber++
     this.setData({ isLower: true })
     const records = await this.loadPage()
-    this.nomore = records.length < this.pageSize
     this.setData({
-      records: this.data.records.concat(records),
       isLower: false,
+      records: this.data.records.concat(records),
     })
-  },
-
-  onRecordTap(e) {
-    wx.navigateTo({ url: '/pages/report/index?report=' + e.mark.id })
   },
 
   onShow() {
@@ -104,41 +103,38 @@ Page({
   },
 
   async loadPageOne() {
-    this.nomore = false
     this.pageNumber = 1
     const records = await this.loadPage()
     this.setData({ records })
   },
 
   async loadPage() {
-    const start = new Date(this.data.start.value).getTime()
-    const date = new Date(this.data.end.value)
-    date.setMonth(date.getMonth() + 1)
-    const end = date.getTime()
-    const and = [
-      { publish: { $eq: true } },
-      { publishedAt: { $gte: start } },
-      { publishedAt: { $lt: end } },
-    ]
-    const approve = this.data.approve.value
-    if (approve !== 'all') {
-      and.push({ approve: { $eq: approve } })
+    const { start, end } = toStartEnd(this.data.start.value, this.data.end.value)
+    const where = {
+      $and: [
+        { publish: { $eq: true } },
+        { publishedAt: { $gte: start } },
+        { publishedAt: { $lt: end } },
+      ]
     }
-    const street = app.global.user.street.map(v => v._id)
-    const relateWhere = {
-      street: { where: { _id: { $in: street } } }
+    if (this.data.approve.value !== 'all') {
+      where.$and.push({ approve: { $eq: this.data.approve.value } })
     }
+    const street = app.global.user.street.map(v => v.name)
+    const relateWhere = { company: { where: { $and: [{ street: { $in: street } }] } } }
     const serach = this.data.search.trim()
-    if (serach) {
-      relateWhere.company = { where: { name: { $search: serach } } }
+    if (serach !== '') {
+      relateWhere.company.where.$and.push({ name: { $search: serach } })
     }
-    const { data } = await wx.cloud.models.reports.list({
-      filter: { relateWhere, where: { $and: and } },
-      orderBy: [{ publishedAt: 'desc' }],
+    const { data } = await wx.cloud.models.huibao.list({
+      filter: { relateWhere, where },
       pageSize: this.pageSize,
       pageNumber: this.pageNumber,
-      select: { approve: true, publishedAt: true, company: { name: true } }
+      orderBy: [{ publishedAt: 'desc' }],
+      select: { street: { name: true }, company: { name: true }, publishBy: true, publishedAt: true, approve: true },
+      getCount: true
     })
+    this.hasNextPage = data.records.length === this.pageSize
     return data.records
   },
 

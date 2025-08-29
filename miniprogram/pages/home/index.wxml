@@ -24,7 +24,7 @@
 
 <t-cell title="选择日期" note="{{date.value}}" hover arrow bind:click="onDateClick" />
 <t-date-time-picker auto-close visible="{{date.visible}}" mode="month" value="{{date.value}}" format="YYYY-MM" start="{{date.start}}" end="{{date.end}}" bind:change="onDateChange" />
-<t-pull-down-refresh t-class="tp" lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
+<t-pull-down-refresh lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
   <t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
     <view slot="description">
       <view>暂无数据</view>
@@ -32,7 +32,7 @@
     </view>
   </t-empty>
   <block wx:else>
-    <view class="a" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onEdit">
+    <view class="a" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onRecordTap">
       <view class="s">{{item.company.name}}</view>
       <view class="d" wx:if="{{item.publish}}">
         <view class="f">

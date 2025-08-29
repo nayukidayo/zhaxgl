@@ -2,7 +2,10 @@ page {
   background-color: var(--td-bg-color-page);
 }
 
-.tl {
+.tm {
   margin-top: 40rpx;
+}
+
+.tl {
   --td-cell-title-color: var(--td-error-color)
 }

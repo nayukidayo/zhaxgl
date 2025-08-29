@@ -45,7 +45,7 @@ Page({
     }
   },
 
-  onEdit(e) {
+  onRecordTap(e) {
     wx.navigateTo({ url: '/pages/report/index?report=' + e.mark.id })
   },
 

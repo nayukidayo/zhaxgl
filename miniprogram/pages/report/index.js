@@ -58,7 +58,6 @@ Page({
           approvedAt: Date.now(),
           approveBy: app.global.user.name,
           approvePhone: app.global.user.phone,
-          street: { _id: app.global.user._id }
         }
       })
       wx.hideLoading()

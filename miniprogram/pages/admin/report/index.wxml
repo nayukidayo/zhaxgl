@@ -22,14 +22,14 @@
   }
 </wxs>
 
-<view class="s">
+<view class="q">
   <t-search placeholder="搜索单位" model:value="{{search}}" bind:submit="onSearch" bind:clear="onSearch" />
 </view>
-<view class="q">
+<view class="w">
   <t-dropdown-menu>
     <t-dropdown-item placement="right" options="{{approve.options}}" value="{{approve.value}}" bind:change="onApproveChange" />
   </t-dropdown-menu>
-  <view class="d">
+  <view class="e">
     <view bind:tap="onStartTap">{{start.value}}</view>
     <view style="margin: 0 20rpx;">到</view>
     <view bind:tap="onEndTap">{{end.value}}</view>
@@ -38,7 +38,7 @@
   <t-date-time-picker auto-close mode="month" format="YYYY-MM" visible="{{start.visible}}" value="{{start.value}}" start="{{start.start}}" end="{{start.end}}" bind:change="onStartChange" />
   <t-date-time-picker auto-close mode="month" format="YYYY-MM" visible="{{end.visible}}" value="{{end.value}}" start="{{end.start}}" end="{{end.end}}" bind:change="onEndChange" />
 </view>
-<t-pull-down-refresh t-class="tp" lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
+<t-pull-down-refresh lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
   <t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
     <view slot="description">
       <view>暂无数据</view>
@@ -46,11 +46,14 @@
     </view>
   </t-empty>
   <block wx:else>
-    <view class="m" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onRecordTap">
-      <view class="c">{{item.company.name}}</view>
-      <view class="g">
+    <view class="a" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onRecordTap">
+      <view class="s">{{item.company.name}}</view>
+      <view class="d">
+        <view class="f">
+          <view>提交人员：{{item.publishBy}}</view>
+          <view>提交时间：{{utils.formatDate(item.publishedAt)}}</view>
+        </view>
         <t-tag variant="light" theme="{{utils.approveToTheme(item.approve)}}">{{utils.approveToText(item.approve)}}</t-tag>
-        <view class="t">{{utils.formatDate(item.publishedAt)}}</view>
       </view>
     </view>
     <view class="l" wx:if="{{isLower}}">
