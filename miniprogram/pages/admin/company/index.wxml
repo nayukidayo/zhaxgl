@@ -1,0 +1,33 @@
+<view class="q">
+  <t-search placeholder="搜索单位" model:value="{{search}}" bind:submit="onSearch" bind:clear="onSearch" />
+</view>
+<view class="w">
+  <view class="e">选择街道</view>
+  <t-dropdown-menu>
+    <t-dropdown-item placement="right" options="{{street.options}}" value="{{street.value}}" bind:change="onStreetChange" />
+  </t-dropdown-menu>
+</view>
+<t-pull-down-refresh lower-threshold="{{50}}" value="{{isRefresh}}" bind:refresh="onRefresh" bind:scrolltolower="onLower">
+  <t-empty wx:if="{{!records.length}}" t-class="te" icon="folder-search">
+    <view slot="description">
+      <view>暂无数据</view>
+      <view>请尝试切换筛选条件或重新输入关键词</view>
+    </view>
+  </t-empty>
+  <block wx:else>
+    <view class="a" hover-class="h" hover-stay-time="{{100}}" wx:for="{{records}}" wx:key="_id" mark:id="{{item._id}}" bind:tap="onRecordTap">
+      <view class="s">{{item.name}}</view>
+      <view class="d">
+        <view class="f">
+          <view>单位联系人：{{item.staffName}}</view>
+          <view>联系人电话：{{item.staffPhone}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="l" wx:if="{{isLower}}">
+      <t-loading theme="dots" size="80rpx" />
+    </view>
+    <view class="z l"></view>
+  </block>
+</t-pull-down-refresh>
+<t-fab style="right: 64rpx; bottom: calc(200rpx + env(safe-area-inset-bottom));" icon="add" bind:click="onAddClick"></t-fab>

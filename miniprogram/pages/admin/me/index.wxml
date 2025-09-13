@@ -1,6 +1,6 @@
 <t-cell t-class="tm" title="名字" note="{{name}}" />
 <t-cell title="手机号" note="{{phone}}" />
-<view class="tm" wx:for="{{street}}" wx:key="_id">
-  <t-cell title="街道" note="{{item.name}}" />
+<view class="tm">
+  <t-cell wx:for="{{street}}" wx:key="_id" title="街道" note="{{item.name}}" />
 </view>
 <t-cell t-class="tl tm" title="退出登录" hover bordered="{{false}}" bind:click="onLogoutClick" />

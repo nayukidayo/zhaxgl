@@ -1,0 +1,22 @@
+<t-input placeholder="请输入文字" value="{{staffName}}" mark:key="staffName" bind:change="onChange">
+  <view slot="label" class="q">单位联系人</view>
+</t-input>
+<t-input placeholder="请输入文字" value="{{staffPhone}}" mark:key="staffPhone" bind:change="onChange">
+  <view slot="label" class="q">联系人电话</view>
+</t-input>
+<view class="w">
+  <view class="e q">所属街道</view>
+  <t-dropdown-menu>
+    <t-dropdown-item placement="right" options="{{street.options}}" value="{{street.value}}" bind:change="onStreetChange" />
+  </t-dropdown-menu>
+</view>
+<view class="r">
+  <view class="l q">单位名称</view>
+  <t-textarea placeholder="请输入文字" disableDefaultPadding="{{true}}" autosize="{{autosize}}" value="{{company}}" mark:key="company" bind:change="onChange" />
+</view>
+<view class="r">
+  <view class="l">单位地址</view>
+  <t-textarea placeholder="请输入文字" disableDefaultPadding="{{true}}" autosize="{{autosize}}" value="{{address}}" mark:key="address" bind:change="onChange" />
+</view>
+<t-button t-class="tb" block theme="primary" bind:tap="onSaveTap">保存</t-button>
+<view class="z"></view>

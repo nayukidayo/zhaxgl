@@ -7,7 +7,8 @@
     "pages/report/kind/index",
     "pages/profile/index",
     "pages/admin/report/index",
-    "pages/admin/stat/index",
+    "pages/admin/company/index",
+    "pages/admin/company/upsert/index",
     "pages/admin/me/index"
   ],
   "window": {
@@ -27,7 +28,7 @@
         "pagePath": "pages/admin/report/index"
       },
       {
-        "pagePath": "pages/admin/stat/index"
+        "pagePath": "pages/admin/company/index"
       },
       {
         "pagePath": "pages/admin/me/index"

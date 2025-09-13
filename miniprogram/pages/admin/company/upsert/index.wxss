@@ -1,0 +1,44 @@
+page {
+  background-color: var(--td-bg-color-page);
+  --td-input-label-max-width: '6em'
+}
+
+.q::after {
+  content: '*';
+  color: red;
+  font-size: 32rpx;
+  margin-left: 4rpx;
+}
+
+.w {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32rpx;
+  margin: 40rpx 0;
+  background-color: var(--td-bg-color-container);
+  --td-dropdown-menu-border-width: 0;
+}
+
+.e {
+  display: flex;
+  align-items: center;
+}
+
+.r+.r {
+  border-top: 0.5px solid var(--td-gray-color-3);
+}
+
+.l {
+  padding: 32rpx;
+  padding-bottom: 0;
+  background-color: var(--td-bg-color-container);
+}
+
+.tb {
+  margin-top: 40rpx;
+  border-radius: 0 !important;
+}
+
+.z {
+  height: 20vh;
+}

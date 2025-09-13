@@ -16,7 +16,7 @@ Component({
         this.setData({
           list: [
             { value: 'report', label: '汇报', icon: 'article' },
-            // { value: 'stat', label: '统计', icon: 'assignment-checked' },
+            { value: 'company', label: '单位', icon: 'city-6' },
             { value: 'me', label: '我的', icon: 'user' },
           ]
         })
