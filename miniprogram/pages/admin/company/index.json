@@ -1,6 +1,6 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "单位",
+  "navigationBarTitleText": "单位名册",
   "usingComponents": {
     "t-search": "tdesign-miniprogram/search/search",
     "t-dropdown-menu": "tdesign-miniprogram/dropdown-menu/dropdown-menu",
@@ -8,6 +8,7 @@
     "t-pull-down-refresh": "tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
     "t-empty": "tdesign-miniprogram/empty/empty",
     "t-loading": "tdesign-miniprogram/loading/loading",
-    "t-fab": "tdesign-miniprogram/fab/fab"
+    "t-fab": "tdesign-miniprogram/fab/fab",
+    "t-icon": "tdesign-miniprogram/icon/icon"
   }
 }

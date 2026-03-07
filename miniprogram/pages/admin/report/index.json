@@ -1,6 +1,6 @@
 {
   "disableScroll": true,
-  "navigationBarTitleText": "汇报",
+  "navigationBarTitleText": "自查报告",
   "usingComponents": {
     "t-search": "tdesign-miniprogram/search/search",
     "t-dropdown-menu": "tdesign-miniprogram/dropdown-menu/dropdown-menu",

@@ -14,6 +14,7 @@ Page({
       maxHeight: 120,
       minHeight: 20,
     },
+    important: false
   },
 
   onChange(e) {
@@ -22,6 +23,10 @@ Page({
 
   onStreetChange(e) {
     this.setData({ 'street.value': e.detail.value })
+  },
+
+  onImportantChange(e) {
+    this.setData({ important: e.detail.value })
   },
 
   async onSaveTap() {
@@ -35,7 +40,8 @@ Page({
       const data = {
         name: company,
         street: street.value,
-        address, staffName, staffPhone
+        address, staffName, staffPhone,
+        important: this.data.important
       }
       if (this.companyId) {
         await wx.cloud.models.companies.update({
@@ -78,7 +84,8 @@ Page({
       street: {
         value: data.street,
         options: street.map(v => ({ value: v.name, label: v.name }))
-      }
+      },
+      important: !!data.important
     })
   },
 })

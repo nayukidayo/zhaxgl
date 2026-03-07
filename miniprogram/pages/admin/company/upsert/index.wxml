@@ -10,6 +10,10 @@
     <t-dropdown-item placement="right" options="{{street.options}}" value="{{street.value}}" bind:change="onStreetChange" />
   </t-dropdown-menu>
 </view>
+<view class="w p">
+  <view class="e">重点单位</view>
+  <t-switch value="{{important}}" bind:change="onImportantChange" />
+</view>
 <view class="r">
   <view class="l q">单位名称</view>
   <t-textarea placeholder="请输入文字" disableDefaultPadding="{{true}}" autosize="{{autosize}}" value="{{company}}" mark:key="company" bind:change="onChange" />

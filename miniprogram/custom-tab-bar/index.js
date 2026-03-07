@@ -4,7 +4,7 @@ Component({
   data: {
     value: 'home',
     list: [
-      { value: 'home', label: '汇报', icon: 'article' },
+      { value: 'home', label: '自查报告', icon: 'article' },
       { value: 'profile', label: '我的', icon: 'user' },
     ],
   },
@@ -15,8 +15,8 @@ Component({
       if (role === 'admin') {
         this.setData({
           list: [
-            { value: 'report', label: '汇报', icon: 'article' },
-            { value: 'company', label: '单位', icon: 'city-6' },
+            { value: 'report', label: '自查报告', icon: 'article' },
+            { value: 'company', label: '单位名册', icon: 'city-6' },
             { value: 'me', label: '我的', icon: 'user' },
           ]
         })

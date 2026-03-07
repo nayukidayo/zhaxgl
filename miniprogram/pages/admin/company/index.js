@@ -88,7 +88,7 @@ Page({
       pageSize: this.pageSize,
       pageNumber: this.pageNumber,
       orderBy: [{ updatedAt: 'desc' }],
-      select: { name: true, staffName: true, staffPhone: true, updatedAt: true }
+      select: { name: true, staffName: true, staffPhone: true, important: true, updatedAt: true }
     })
     this.hasNextPage = data.records.length === this.pageSize
     return data.records

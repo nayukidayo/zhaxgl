@@ -22,6 +22,9 @@
           <view>单位联系人：{{item.staffName}}</view>
           <view>联系人电话：{{item.staffPhone}}</view>
         </view>
+        <view class="g" wx:if="{{item.important}}">
+          <t-icon name="star-filled" size="48rpx" color="#f3b814"/>
+        </view>
       </view>
     </view>
     <view class="l" wx:if="{{isLower}}">
