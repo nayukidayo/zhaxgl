@@ -1,4 +1,4 @@
-<t-cell t-class="tm" title="名字" note="{{name}}" />
+<t-cell t-class="tm" title="姓名" note="{{name}}" />
 <t-cell title="手机号" note="{{phone}}" />
 <view class="tm">
   <t-cell wx:for="{{street}}" wx:key="_id" title="街道" note="{{item.name}}" />

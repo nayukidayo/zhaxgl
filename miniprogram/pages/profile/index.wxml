@@ -1,4 +1,4 @@
-<t-cell t-class="tm" title="名字" note="{{name}}" />
+<t-cell t-class="tm" title="姓名" note="{{name}}" />
 <t-cell title="手机号" note="{{phone}}" />
 <t-cell t-class="tm" title="街道" note="{{street}}" />
 <t-cell t-class="tm" title="单位" description="{{company}}" />
