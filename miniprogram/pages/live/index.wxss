@@ -1,0 +1,23 @@
+page {
+  background-color: var(--td-bg-color-page);
+}
+
+.q {
+  margin-top: 40rpx;
+  padding: 32rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.a {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 10rpx;
+}
+
+.s {
+  font-weight: bold;
+}

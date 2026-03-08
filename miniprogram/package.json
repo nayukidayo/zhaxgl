@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@cloudbase/wx-cloud-client-sdk": "^1.6.1",
+    "@trtc/calls-uikit-wx": "^4.2.7",
     "miniprogram-api-typings": "^4.1.0",
     "tdesign-miniprogram": "^1.10.0"
   }

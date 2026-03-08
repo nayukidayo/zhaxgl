@@ -1,0 +1,8 @@
+{
+  "disableScroll": true,
+  "navigationBarTitleText": "视频报告",
+  "usingComponents": {
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-button": "tdesign-miniprogram/button/button"
+  }
+}

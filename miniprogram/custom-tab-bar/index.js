@@ -5,6 +5,7 @@ Component({
     value: 'home',
     list: [
       { value: 'home', label: '自查报告', icon: 'article' },
+      { value: 'live', label: '视频报告', icon: 'video-camera-1' },
       { value: 'profile', label: '我的', icon: 'user' },
     ],
   },

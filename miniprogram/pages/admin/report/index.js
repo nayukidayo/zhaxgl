@@ -1,7 +1,10 @@
 import { getMaxDate, toStartEnd } from '../../../utils/utils'
+import { CallManager } from '../../../TUICallKit/TUICallService/serve/callManager'
+import * as GenerateTestUserSig from '../../../TUICallKit/debug/GenerateTestUserSig-es.js'
 
 const app = getApp()
 const max = getMaxDate()
+wx.CallManager = new CallManager()
 
 Page({
   data: {
@@ -35,6 +38,18 @@ Page({
   pageSize: 10,
   pageNumber: 1,
   hasNextPage: false,
+
+  async onLoad() {
+    const userID = app.global.user.phone
+    if (!userID) return
+    const { userSig, SDKAppID } = GenerateTestUserSig.genTestUserSig({ userID: userID })
+    await wx.CallManager.init({
+      sdkAppID: SDKAppID,
+      userID: userID,
+      userSig: userSig,
+      globalCallPagePath: 'TUICallKit/pages/globalCall/globalCall',
+    })
+  },
 
   onSearch() {
     this.onRefresh()

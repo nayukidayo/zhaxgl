@@ -5,11 +5,13 @@
     "pages/home/index",
     "pages/report/index",
     "pages/report/kind/index",
+    "pages/live/index",
     "pages/profile/index",
     "pages/admin/report/index",
     "pages/admin/company/index",
     "pages/admin/company/upsert/index",
-    "pages/admin/me/index"
+    "pages/admin/me/index",
+    "TUICallKit/pages/globalCall/globalCall"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",
@@ -20,6 +22,9 @@
     "list": [
       {
         "pagePath": "pages/home/index"
+      },
+      {
+        "pagePath": "pages/live/index"
       },
       {
         "pagePath": "pages/profile/index"

@@ -1,0 +1,13 @@
+<view class="q" wx:if="{{name}}">
+  <view>
+    <view class="a">
+      <view class="s">{{name}}</view>
+      <t-tag size="small" variant="light" theme="{{online?'success':'danger'}}">{{online?'在线':'离线'}}</t-tag>
+    </view>
+    <view>{{phone}}</view>
+    <view>{{street}}</view>
+  </view>
+  <view>
+    <t-button theme="light" bind:tap="{{online?'callTap':'refreshTap'}}">{{online?'呼叫':'刷新'}}</t-button>
+  </view>
+</view>
